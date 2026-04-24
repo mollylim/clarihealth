@@ -725,6 +725,12 @@
     flex-wrap: wrap;
   }
 
+  #mc_embed_shell,
+  #mc_embed_signup,
+  #mc_embed_signup_scroll {
+    width: 100%;
+  }
+
   .signup-form label {
     width: 100%;
     text-align: left;
@@ -732,6 +738,20 @@
     color: var(--text-secondary);
     font-weight: 500;
     margin-bottom: 0.25rem;
+  }
+
+  .indicates-required {
+    width: 100%;
+    text-align: left;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .mc-field-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .signup-input {
@@ -1178,19 +1198,16 @@
     <div class="signup-card reveal">
       <div class="signup-title">Join our early access list</div>
       <p class="signup-sub">Get updates on our launch, content releases, and NHS integration milestones.</p>
-      <form class="signup-form validate" action="https://clarihealth.us9.list-manage.com/subscribe/post?u=5d5879174f9a9c9f078cd1fb5&amp;id=c766ec8bc0&amp;f_id=00b557e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-        <label for="mce-EMAIL">Email Address <span class="signup-required">*</span></label>
-        <input class="signup-input required email" type="email" name="EMAIL" id="mce-EMAIL" placeholder="Your email address" required>
-        <button class="signup-btn" type="submit" name="subscribe" id="mc-embedded-subscribe">Notify me</button>
-        <div class="mc-responses" id="mce-responses">
-          <div class="mc-response" id="mce-error-response" style="display:none;"></div>
-          <div class="mc-response" id="mce-success-response" style="display:none;"></div>
+      <form action="https://clarihealth.us9.list-manage.com/subscribe/post?u=5d5879174f9a9c9f078cd1fb5&amp;id=c766ec8bc0&amp;f_id=00b557e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+        <div class="signup-form">
+          <input type="email" name="EMAIL" class="signup-input" placeholder="Your email address" required>
+          <div aria-hidden="true" style="position:absolute;left:-5000px;">
+            <input type="text" name="b_5d5879174f9a9c9f078cd1fb5_c766ec8bc0" tabindex="-1" value="">
+          </div>
+          <button type="submit" name="subscribe" class="signup-btn">Notify me</button>
         </div>
-        <div aria-hidden="true" style="position:absolute;left:-5000px;">
-          <input type="text" name="b_5d5879174f9a9c9f078cd1fb5_c766ec8bc0" tabindex="-1" value="">
-        </div>
+        <p class="signup-note">No spam, ever. Unsubscribe anytime.</p>
       </form>
-      <p class="signup-note">No spam, ever. Unsubscribe anytime.</p>
     </div>
   </div>
 </section>
