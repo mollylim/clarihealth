@@ -24,7 +24,10 @@
     --white: #ffffff;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+  }
 
   body {
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
@@ -46,11 +49,11 @@
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(90deg,
-      rgba(255,255,255,0.94) 0%,
-      rgba(213,211,255,0.48) 35%,
-      rgba(228,221,255,0.56) 50%,
-      rgba(213,211,255,0.48) 65%,
-      rgba(255,255,255,0.94) 100%);
+      rgba(255,255,255,0.96) 0%,
+      rgba(198,189,255,0.72) 35%,
+      rgba(182,170,255,0.78) 50%,
+      rgba(198,189,255,0.72) 65%,
+      rgba(255,255,255,0.96) 100%);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(39,138,180,0.08);
   }
@@ -286,7 +289,7 @@
   /* ── STATS STRIP ── */
   .stats-strip {
     padding: 2.5rem 2rem;
-    background: linear-gradient(180deg, rgba(174,224,244,0.12) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(180deg, rgba(174,224,244,0.28) 0%, rgba(255,255,255,0) 100%);
     border-top: 1px solid rgba(174,224,244,0.4);
     border-bottom: 1px solid rgba(174,224,244,0.4);
   }
@@ -364,7 +367,7 @@
 
   /* ── MISSION ── */
   .mission {
-    background: var(--surface);
+    background: #ecf7fb;
   }
 
   .mission-grid {
@@ -397,7 +400,7 @@
   }
 
   .play-area {
-    background: linear-gradient(135deg, rgba(39,138,180,0.07) 0%, rgba(213,211,255,0.15) 100%);
+    background: linear-gradient(135deg, rgba(39,138,180,0.14) 0%, rgba(213,211,255,0.28) 100%);
     border-radius: 14px;
     height: 200px;
     display: flex;
@@ -520,7 +523,7 @@
 
   /* ── WHY SECTION ── */
   .why {
-    background: linear-gradient(160deg, rgba(39,138,180,0.04) 0%, rgba(213,211,255,0.12) 60%, rgba(255,227,161,0.08) 100%);
+    background: linear-gradient(160deg, rgba(39,138,180,0.1) 0%, rgba(213,211,255,0.24) 60%, rgba(255,227,161,0.18) 100%);
   }
 
   .why-grid {
@@ -586,7 +589,7 @@
 
   /* ── COMING SOON CONTENT ── */
   .content-section {
-    background: var(--surface);
+    background: #eef8fc;
   }
 
   .content-grid {
@@ -722,6 +725,15 @@
     flex-wrap: wrap;
   }
 
+  .signup-form label {
+    width: 100%;
+    text-align: left;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
   .signup-input {
     flex: 1;
     min-width: 200px;
@@ -763,6 +775,22 @@
     font-size: 0.78rem;
     color: var(--text-muted);
     margin-top: 0.85rem;
+  }
+
+  .signup-required {
+    color: #d94a6d;
+  }
+
+  .mc-responses {
+    width: 100%;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+
+  .mc-response {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
   }
 
   /* ── FOOTER ── */
@@ -1150,10 +1178,18 @@
     <div class="signup-card reveal">
       <div class="signup-title">Join our early access list</div>
       <p class="signup-sub">Get updates on our launch, content releases, and NHS integration milestones.</p>
-      <div class="signup-form">
-        <input class="signup-input" type="email" placeholder="Your email address">
-        <button class="signup-btn">Notify me</button>
-      </div>
+      <form class="signup-form validate" action="https://clarihealth.us9.list-manage.com/subscribe/post?u=5d5879174f9a9c9f078cd1fb5&amp;id=c766ec8bc0&amp;f_id=00b557e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+        <label for="mce-EMAIL">Email Address <span class="signup-required">*</span></label>
+        <input class="signup-input required email" type="email" name="EMAIL" id="mce-EMAIL" placeholder="Your email address" required>
+        <button class="signup-btn" type="submit" name="subscribe" id="mc-embedded-subscribe">Notify me</button>
+        <div class="mc-responses" id="mce-responses">
+          <div class="mc-response" id="mce-error-response" style="display:none;"></div>
+          <div class="mc-response" id="mce-success-response" style="display:none;"></div>
+        </div>
+        <div aria-hidden="true" style="position:absolute;left:-5000px;">
+          <input type="text" name="b_5d5879174f9a9c9f078cd1fb5_c766ec8bc0" tabindex="-1" value="">
+        </div>
+      </form>
       <p class="signup-note">No spam, ever. Unsubscribe anytime.</p>
     </div>
   </div>
@@ -1188,18 +1224,6 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  document.querySelector('.signup-btn').addEventListener('click', () => {
-    const input = document.querySelector('.signup-input');
-    if (input.value && input.value.includes('@')) {
-      input.value = '';
-      input.placeholder = 'Thank you — we\'ll be in touch!';
-      input.style.borderColor = 'var(--ocean)';
-    } else {
-      input.style.borderColor = '#e0607e';
-      input.placeholder = 'Please enter a valid email';
-    }
-  });
 </script>
 </body>
 </html>
