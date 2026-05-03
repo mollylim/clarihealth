@@ -610,7 +610,9 @@
     .carousel-stack .feature-desc,
     .carousel-stack .content-body {
       overflow-y: visible;
-      flex: 0 1 auto;
+      flex: 0 0 auto;
+      flex-grow: 0;
+      flex-shrink: 0;
       min-height: auto;
     }
   }
@@ -621,13 +623,13 @@
       padding: 0.65rem 3rem 1.85rem;
     }
     .card-carousel[data-carousel-kind="insights"] {
-      --carousel-card-height: min(22rem, 78vh);
+      --carousel-card-height: 15.5rem;
     }
     .card-carousel[data-carousel-kind="features"] {
-      --carousel-card-height: min(24rem, 82vh);
+      --carousel-card-height: 16.5rem;
     }
     .card-carousel[data-carousel-kind="content"] {
-      --carousel-card-height: min(26rem, 85vh);
+      --carousel-card-height: 17.5rem;
     }
     .carousel-stack .content-thumb {
       height: 104px;
@@ -1700,6 +1702,42 @@
 
         activeIndex = ((activeIndex % n) + n) % n;
 
+        const phone =
+          typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(max-width: 640px)').matches;
+
+        if (phone && n > 0) {
+          els.forEach((el) => {
+            el.style.transform = 'none';
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            el.style.top = '0';
+            el.style.height = 'auto';
+            el.style.maxHeight = 'none';
+            el.style.visibility = 'hidden';
+          });
+          let maxH = 0;
+          els.forEach((el) => {
+            maxH = Math.max(maxH, el.offsetHeight);
+          });
+          els.forEach((el) => {
+            el.style.transform = '';
+            el.style.position = '';
+            el.style.left = '';
+            el.style.top = '';
+            el.style.height = '';
+            el.style.maxHeight = '';
+            el.style.visibility = '';
+          });
+          root.style.setProperty(
+            '--carousel-card-height',
+            Math.max(160, maxH + 4) + 'px'
+          );
+        } else {
+          root.style.removeProperty('--carousel-card-height');
+        }
+
         let halfW = 0;
         const probe = els[activeIndex] || els[0];
         const narrow =
@@ -1765,29 +1803,6 @@
           el.classList.toggle('is-behind', rel > 0);
           el.classList.toggle('is-peek', isPeek);
         });
-
-        const phone =
-          typeof window !== 'undefined' &&
-          window.matchMedia &&
-          window.matchMedia('(max-width: 640px)').matches;
-        if (phone) {
-          const minPx = 240;
-          const syncStackHeightFromContent = () => {
-            const list = items();
-            let maxH = 0;
-            list.forEach((el) => {
-              maxH = Math.max(maxH, el.scrollHeight);
-            });
-            root.style.setProperty(
-              '--carousel-card-height',
-              Math.max(minPx, maxH + 12) + 'px'
-            );
-          };
-          syncStackHeightFromContent();
-          requestAnimationFrame(syncStackHeightFromContent);
-        } else {
-          root.style.removeProperty('--carousel-card-height');
-        }
       }
 
       if (prevBtn) {
