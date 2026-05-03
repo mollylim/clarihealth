@@ -308,6 +308,16 @@
     background: white;
     border-radius: 16px;
     border: 1px solid rgba(174,224,244,0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(39,138,180,0.35);
+    box-shadow:
+      0 12px 32px rgba(39,138,180,0.12),
+      0 0 0 1px rgba(174,224,244,0.6),
+      0 0 28px rgba(39,138,180,0.15);
   }
 
   .stat-number {
@@ -389,6 +399,15 @@
     padding: 2rem;
     position: relative;
     overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .visual-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(39,138,180,0.35);
+    box-shadow:
+      0 16px 40px rgba(39,138,180,0.14),
+      0 0 32px rgba(155,153,212,0.18);
   }
 
   .visual-card::before {
@@ -420,7 +439,10 @@
     cursor: pointer;
   }
 
-  .play-btn:hover { transform: scale(1.08); }
+  .play-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 28px rgba(39,138,180,0.35), 0 0 24px rgba(39,138,180,0.35);
+  }
 
   .play-btn svg { width: 24px; height: 24px; margin-left: 4px; }
 
@@ -447,32 +469,6 @@
     background: rgba(174,224,244,0.2);
   }
 
-  .floating-badge {
-    position: absolute;
-    top: -14px; right: -14px;
-    background: white;
-    border: 1px solid rgba(213,211,255,0.8);
-    border-radius: 12px;
-    padding: 0.6rem 0.9rem;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  }
-
-  .floating-badge-bottom {
-    position: absolute;
-    bottom: -14px; left: -14px;
-    background: white;
-    border: 1px solid rgba(255,227,161,0.9);
-    border-radius: 12px;
-    padding: 0.6rem 0.9rem;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  }
-
   /* ── FEATURES ── */
   .features-grid {
     display: grid;
@@ -486,12 +482,15 @@
     border: 1px solid rgba(174,224,244,0.45);
     border-radius: 18px;
     padding: 1.75rem;
-    transition: transform 0.25s, box-shadow 0.25s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
   .feature-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(39,138,180,0.1);
+    border-color: rgba(39,138,180,0.38);
+    box-shadow:
+      0 12px 36px rgba(39,138,180,0.12),
+      0 0 36px rgba(39,138,180,0.14);
   }
 
   .feature-icon {
@@ -527,36 +526,8 @@
   }
 
   .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-
-  .stat-highlight {
-    background: white;
-    border-radius: 18px;
-    border: 1px solid rgba(174,224,244,0.5);
-    padding: 1.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .stat-highlight-number {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    font-size: 2.6rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--ocean);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-
-  .stat-highlight-label {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    font-weight: 300;
+    max-width: 720px;
+    margin: 3rem auto 0;
   }
 
   .why-points {
@@ -604,10 +575,16 @@
     border: 1px solid rgba(174,224,244,0.45);
     border-radius: 18px;
     overflow: hidden;
-    transition: transform 0.25s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
-  .content-card:hover { transform: translateY(-3px); }
+  .content-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(39,138,180,0.38);
+    box-shadow:
+      0 14px 40px rgba(39,138,180,0.11),
+      0 0 32px rgba(155,153,212,0.12);
+  }
 
   .content-thumb {
     height: 140px;
@@ -864,8 +841,7 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
-    .mission-grid, .why-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .floating-badge, .floating-badge-bottom { display: none; }
+    .mission-grid { grid-template-columns: 1fr; gap: 2rem; }
     .signup-form { flex-direction: column; }
     .signup-input { min-width: unset; width: 100%; }
   }
@@ -993,8 +969,6 @@
             <span class="lang-pill">Cantonese</span>
             <span class="lang-pill">+ more</span>
           </div>
-          <div class="floating-badge">🎬 Animated & culturally sensitive</div>
-          <div class="floating-badge-bottom">📋 NHS e-consent ready</div>
         </div>
       </div>
     </div>
@@ -1052,25 +1026,6 @@
     <h2 class="section-title reveal">Addressing a critical gap in women's healthcare</h2>
 
     <div class="why-grid">
-      <div>
-        <div class="stat-highlight reveal">
-          <div class="stat-highlight-number">8.4 yrs</div>
-          <div class="stat-highlight-label">life expectancy gap at birth for women in the most deprived areas compared with the most affluent in England</div>
-        </div>
-        <div class="stat-highlight reveal">
-          <div class="stat-highlight-number">2×+</div>
-          <div class="stat-highlight-label">babies born to Black women are over twice as likely to die in their first year compared with those born to white women — Black women also experience the highest maternal mortality rates</div>
-        </div>
-        <div class="stat-highlight reveal">
-          <div class="stat-highlight-number">1 in 3</div>
-          <div class="stat-highlight-label">births in England and Wales are now to women born outside the UK — rising to nearly 3 in 5 in London (ONS, 2023)</div>
-        </div>
-        <div class="stat-highlight reveal">
-          <div class="stat-highlight-number">9%</div>
-          <div class="stat-highlight-label">only ~9% of births in responding NHS Trusts were recorded as requiring an interpreter — yet an estimated 37,000 mothers per year may struggle to communicate without support (MacLellan et al., 2024)</div>
-        </div>
-      </div>
-
       <div class="reveal">
         <p style="font-size:1.05rem; color:var(--text-secondary); font-weight:300; line-height:1.85; margin-bottom:1.5rem;">
           The NHS faces persistent challenges: language barriers, inconsistent interpreting services, and variable consent standards. No current tool addresses the full breadth of women's health needs or the specific requirements of ethnic minority patients.
