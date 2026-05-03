@@ -286,56 +286,89 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── STATS STRIP ── */
-  .stats-strip {
-    padding: 2.5rem 2rem;
-    background: linear-gradient(180deg, rgba(174,224,244,0.28) 0%, rgba(255,255,255,0) 100%);
+  /* ── COMMUNITY INSIGHTS ── */
+  .insights-strip {
+    padding: 3rem 2rem;
+    background: linear-gradient(180deg, rgba(174,224,244,0.3) 0%, rgba(213,211,255,0.16) 100%);
     border-top: 1px solid rgba(174,224,244,0.4);
     border-bottom: 1px solid rgba(174,224,244,0.4);
   }
 
-  .stats-inner {
-    max-width: 900px;
+  .insights-inner {
+    max-width: 980px;
     margin: 0 auto;
+  }
+
+  .insights-head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 1.8rem;
+  }
+
+  .insights-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(39,138,180,0.2);
+    border-radius: 100px;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .insights-title {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-size: clamp(1.35rem, 2.8vw, 1.95rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ocean-deeper);
+    margin-bottom: 0.6rem;
+  }
+
+  .insights-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .insights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
   }
 
-  .stat-card {
-    text-align: center;
-    padding: 1.5rem 1rem;
+  .insight-card {
     background: white;
     border-radius: 16px;
-    border: 1px solid rgba(174,224,244,0.5);
+    border: 1px solid rgba(174,224,244,0.55);
+    padding: 1.15rem;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
-  .stat-card:hover {
+  .insight-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(39,138,180,0.35);
+    border-color: rgba(39,138,180,0.38);
     box-shadow:
-      0 12px 32px rgba(39,138,180,0.12),
-      0 0 0 1px rgba(174,224,244,0.6),
-      0 0 28px rgba(39,138,180,0.15);
+      0 12px 30px rgba(39,138,180,0.11),
+      0 0 30px rgba(39,138,180,0.14);
   }
 
-  .stat-number {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--ocean);
-    line-height: 1;
+  .insight-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ocean-deeper);
     margin-bottom: 0.4rem;
   }
 
-  .stat-label {
+  .insight-text {
     font-size: 0.82rem;
     color: var(--text-secondary);
-    line-height: 1.4;
-    max-width: 160px;
-    margin: 0 auto;
+    line-height: 1.55;
+    font-weight: 300;
   }
 
   /* ── SECTION COMMON ── */
@@ -877,7 +910,7 @@
       <span class="line-lavender">a barrier</span>
     </h1>
     <p class="hero-sub">
-      Clari Health is a digital platform bringing animated, multilingual, and culturally sensitive health education to women everywhere — supporting informed consent and empowered decisions across the NHS and beyond.
+      Clari Health is a digital platform bringing animated, multilingual, and culturally sensitive health education to women everywhere, supporting informed consent and empowered decisions across the NHS and beyond.
     </p>
     <div class="hero-actions">
       <a class="btn-primary" href="#notify">
@@ -891,27 +924,36 @@
   </div>
 </section>
 
-<!-- STATS STRIP -->
-<div class="stats-strip">
-  <div class="stats-inner">
-    <div class="stat-card reveal">
-      <div class="stat-number">8.4 yrs</div>
-      <div class="stat-label">life expectancy gap between women in the most deprived and most affluent areas of England</div>
+<!-- COMMUNITY INSIGHTS -->
+<section class="insights-strip">
+  <div class="insights-inner">
+    <div class="insights-head reveal">
+      <span class="insights-kicker">What we have heard so far</span>
+      <h2 class="insights-title">Community voices are shaping what we build</h2>
+      <p class="insights-subtitle">
+        Families and women continue to share clear challenges with us. These insights are guiding our content and our product decisions.
+      </p>
     </div>
-    <div class="stat-card reveal">
-      <div class="stat-number">2×+</div>
-      <div class="stat-label">babies born to Black women are over twice as likely to die in their first year compared to those born to white women</div>
-    </div>
-    <div class="stat-card reveal">
-      <div class="stat-number">37,000</div>
-      <div class="stat-label">live births per year where the mother may struggle to communicate without support (ONS, 2022)</div>
-    </div>
-    <div class="stat-card reveal">
-      <div class="stat-number">30→90%</div>
-      <div class="stat-label">improvement in patient understanding with animation-supported consent</div>
+    <div class="insights-grid">
+      <div class="insight-card reveal">
+        <div class="insight-title">Information in more languages</div>
+        <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-title">Faster access to interpreters</div>
+        <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-title">Cultural understanding in care</div>
+        <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-title">Clearer explanations from staff</div>
+        <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- MISSION -->
 <section class="mission" id="mission">
@@ -919,7 +961,7 @@
     <div class="section-label reveal">Our mission</div>
     <h2 class="section-title reveal">Health information that truly reaches everyone</h2>
     <p class="section-body reveal">
-      Every woman deserves to fully understand her healthcare options — regardless of her language, cultural background, or where she accesses care. Clari Health is being built to make that a reality.
+      Every woman deserves to fully understand her healthcare options, regardless of her language, cultural background, or where she accesses care. Clari Health is being built to make that a reality.
     </p>
 
     <div class="mission-grid">
@@ -928,10 +970,10 @@
           Clear, animated videos and infographic guides for women's health procedures
         </h3>
         <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.8; font-weight:300; margin-bottom:1.25rem;">
-          Our content explains the purpose, benefits, and risks of common procedures and treatments — with warmth, clarity, and cultural sensitivity built in from the start.
+          Our content explains the purpose, benefits, and risks of common procedures and treatments, with warmth, clarity, and cultural sensitivity built in from the start.
         </p>
         <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.8; font-weight:300; margin-bottom:1.5rem;">
-          Videos are designed for use by clinicians in any clinical or community setting, while patients can access infographics and educational content at home — in their own language, in their own time.
+          Videos are designed for use by clinicians in any clinical or community setting, while patients can access infographics and educational content at home, in their own language, in their own time.
         </p>
         <ul class="why-points">
           <li class="why-point">
@@ -944,7 +986,7 @@
           </li>
           <li class="why-point">
             <div class="why-dot"><svg viewBox="0 0 10 10" fill="none"><path d="M2.5 5l2 2 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            Built for clinicians and patients alike — wherever they are
+            Built for clinicians and patients alike, wherever they are
           </li>
         </ul>
       </div>
@@ -956,7 +998,7 @@
               <svg viewBox="0 0 24 24" fill="none"><path d="M7 4l13 8-13 8V4z" fill="white"/></svg>
             </div>
           </div>
-          <p class="play-label">Animated patient education videos — coming soon</p>
+          <p class="play-label">Animated patient education videos, coming soon</p>
           <div class="lang-pills">
             <span class="lang-pill">English</span>
             <span class="lang-pill">Arabic</span>
@@ -988,32 +1030,32 @@
       <div class="feature-card reveal">
         <div class="feature-icon icon-blue">🎬</div>
         <div class="feature-title">Animated patient videos</div>
-        <p class="feature-desc">Professionally animated explanations of common women's health procedures — engaging, accessible, and clinically accurate.</p>
+        <p class="feature-desc">Professionally animated explanations of common women's health procedures, engaging, accessible, and clinically accurate.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon icon-lavender">🌍</div>
         <div class="feature-title">Multilingual narration</div>
-        <p class="feature-desc">Content available in multiple languages with authentic narration — removing language as a barrier to understanding care.</p>
+        <p class="feature-desc">Content available in multiple languages with authentic narration, removing language as a barrier to understanding care.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon icon-butter">🤝</div>
         <div class="feature-title">Cultural sensitivity</div>
-        <p class="feature-desc">Developed with input from diverse communities — addressing the specific needs of ethnic minority women who face the greatest health inequalities.</p>
+        <p class="feature-desc">Developed with input from diverse communities, addressing the specific needs of ethnic minority women who face the greatest health inequalities.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon icon-apricot">📋</div>
         <div class="feature-title">Infographic guides</div>
-        <p class="feature-desc">Clear, visual infographic guides patients can access at home before and after appointments — empowering shared decision-making.</p>
+        <p class="feature-desc">Clear, visual infographic guides patients can access at home before and after appointments, empowering shared decision-making.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon icon-blue">🏥</div>
         <div class="feature-title">NHS e-consent integration</div>
-        <p class="feature-desc">Designed to integrate seamlessly into existing NHS e-consent systems — scalable and built to meet NHS standards.</p>
+        <p class="feature-desc">Designed to integrate seamlessly into existing NHS e-consent systems, scalable and built to meet NHS standards.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon icon-lavender">⚕️</div>
         <div class="feature-title">For clinicians & patients</div>
-        <p class="feature-desc">Usable in clinics, community settings, and at home — supporting the full patient journey from first conversation to consent.</p>
+        <p class="feature-desc">Usable in clinics, community settings, and at home, supporting the full patient journey from first conversation to consent.</p>
       </div>
     </div>
   </div>
@@ -1031,7 +1073,7 @@
           The NHS faces persistent challenges: language barriers, inconsistent interpreting services, and variable consent standards. No current tool addresses the full breadth of women's health needs or the specific requirements of ethnic minority patients.
         </p>
         <p style="font-size:1.05rem; color:var(--text-secondary); font-weight:300; line-height:1.85; margin-bottom:1.5rem;">
-          Clari Health is being built to directly address these inequalities — combining the proven power of animation with multilingual content and cultural nuance into a single, scalable system.
+          Clari Health is being built to directly address these inequalities, combining the proven power of animation with multilingual content and cultural nuance into a single, scalable system.
         </p>
         <ul class="why-points">
           <li class="why-point">
@@ -1072,7 +1114,7 @@
         </div>
         <div class="content-body">
           <div class="content-title">Induction of labour</div>
-          <p class="content-desc">Animated explanation of the induction process, what to expect, options, and risks — available in multiple languages.</p>
+          <p class="content-desc">Animated explanation of the induction process, what to expect, options, and risks, available in multiple languages.</p>
         </div>
       </div>
       <div class="content-card reveal">
@@ -1082,7 +1124,7 @@
         </div>
         <div class="content-body">
           <div class="content-title">Caesarean section</div>
-          <p class="content-desc">Clear animated guide to planned and emergency caesarean birth — covering procedure, recovery, and consent considerations.</p>
+          <p class="content-desc">Clear animated guide to planned and emergency caesarean birth, covering procedure, recovery, and consent considerations.</p>
         </div>
       </div>
       <div class="content-card reveal">
@@ -1115,7 +1157,7 @@
     <div class="section-label reveal">NHS integration</div>
     <h2 class="section-title reveal">Built for the NHS, from the ground up</h2>
     <p class="section-body reveal">
-      Clari Health is designed to integrate seamlessly into NHS e-consent systems and clinical workflows — with the scalability and standards compliance the NHS requires.
+      Clari Health is designed to integrate seamlessly into NHS e-consent systems and clinical workflows, with the scalability and standards compliance the NHS requires.
     </p>
     <div class="nhs-badges">
       <div class="nhs-badge reveal">
@@ -1148,7 +1190,7 @@
     <div class="section-label reveal">Stay in the loop</div>
     <h2 class="section-title reveal" style="text-align:center;">Be the first to know when we launch</h2>
     <p class="section-body reveal" style="margin:0 auto 0; text-align:center;">
-      Whether you're a patient, clinician, NHS commissioner, or someone who cares about health equity — we'd love to keep you updated.
+      Whether you're a patient, clinician, NHS commissioner, or someone who cares about health equity, we'd love to keep you updated.
     </p>
     <div class="signup-card reveal">
       <div class="signup-title">Join our early access list</div>
