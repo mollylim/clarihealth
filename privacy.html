@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy – Clari Health</title>
+<link rel="icon" type="image/png" href="clari logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,39 +13,48 @@
     --ocean: #278AB4;
     --cool: #AEE0F4;
     --lavender: #D5D3FF;
+    --butter: #FFE3A1;
+    --apricot: #FED594;
     --ocean-dark: #1a6a8a;
     --ocean-deeper: #0f4a63;
     --lavender-deep: #9B99D4;
-    --text-primary: #111820;
-    --text-secondary: #2c3e4a;
-    --text-muted: #5a7a8a;
+    --text-primary: #0f1f2a;
+    --text-secondary: #32495b;
+    --text-muted: #607a8d;
     --surface: #f7fbfd;
     --white: #ffffff;
+  }
+
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     font-weight: 400;
+    font-size: 1.0625rem;
     color: var(--text-primary);
     background: var(--white);
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
   /* ── NAV ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 9000;
     padding: 1.25rem 2.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(90deg,
-      rgba(255,255,255,0.94) 0%,
-      rgba(213,211,255,0.22) 35%,
-      rgba(213,211,255,0.30) 50%,
-      rgba(213,211,255,0.22) 65%,
-      rgba(255,255,255,0.94) 100%);
+      rgba(255,255,255,0.96) 0%,
+      rgba(198,189,255,0.72) 35%,
+      rgba(182,170,255,0.78) 50%,
+      rgba(198,189,255,0.72) 65%,
+      rgba(255,255,255,0.96) 100%);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(39,138,180,0.08);
   }
@@ -57,14 +67,11 @@
   }
 
   .logo-mark {
-    width: 34px; height: 34px;
+    width: 36px; height: 36px;
     border-radius: 10px;
-    background: radial-gradient(ellipse at center,
-      rgba(213,211,255,1) 0%,
-      rgba(174,174,220,1) 45%,
-      rgba(123,121,192,1) 100%);
-    display: flex; align-items: center; justify-content: center;
+    display: inline-block;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   .logo-text {
@@ -76,14 +83,106 @@
     text-transform: lowercase;
   }
 
-  .logo-text .clari { color: #7B79C0; }
-  .logo-text span { color: #5BA8CC; }
+  .logo-text .clari { color: #9B99D4; }
+  .logo-text span { color: var(--ocean); }
+
+  /* ── Top hero (blobs + policy title only; no full-screen marketing) ── */
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 6.75rem 2rem 2.25rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(247, 251, 253, 0.65) 100%);
+    border-bottom: 1px solid rgba(39, 138, 180, 0.12);
+    box-shadow: 0 20px 50px rgba(15, 74, 99, 0.05);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.45;
+  }
+
+  .blob-1 {
+    width: 520px; height: 520px;
+    top: -120px; left: -80px;
+    background: radial-gradient(circle, var(--cool) 0%, transparent 70%);
+    animation: floatA 12s ease-in-out infinite;
+  }
+
+  .blob-2 {
+    width: 420px; height: 420px;
+    top: 60px; right: -60px;
+    background: radial-gradient(circle, var(--lavender) 0%, transparent 70%);
+    animation: floatB 15s ease-in-out infinite;
+  }
+
+  .blob-3 {
+    width: 300px; height: 300px;
+    bottom: -40px; left: 25%;
+    background: radial-gradient(circle, rgba(255,227,161,0.7) 0%, transparent 70%);
+    animation: floatA 10s ease-in-out infinite reverse;
+  }
+
+  .blob-4 {
+    width: 200px; height: 200px;
+    bottom: 20px; right: 10%;
+    background: radial-gradient(circle, rgba(254,213,148,0.6) 0%, transparent 70%);
+    animation: floatB 14s ease-in-out infinite;
+  }
+
+  @keyframes floatA {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -30px) scale(1.04); }
+    66% { transform: translate(-15px, 20px) scale(0.97); }
+  }
+  @keyframes floatB {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-25px, 30px) scale(1.05); }
+  }
+
+  .page-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .page-hero .page-label {
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero .page-title {
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero .page-date {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob-1,
+    .blob-2,
+    .blob-3,
+    .blob-4 {
+      animation: none !important;
+    }
+  }
 
   /* ── CONTENT ── */
   .page-wrap {
     max-width: 720px;
     margin: 0 auto;
-    padding: 8rem 2rem 5rem;
+    padding: 2.5rem 2rem 5rem;
   }
 
   .page-label {
@@ -108,9 +207,6 @@
   .page-date {
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(174,224,244,0.4);
   }
 
   h2 {
@@ -201,7 +297,8 @@
 
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
-    .page-wrap { padding: 7rem 1.25rem 4rem; }
+    .page-hero { padding: 6rem 1.25rem 1.75rem; }
+    .page-wrap { padding: 2rem 1.25rem 4rem; }
   }
 </style>
 </head>
@@ -210,23 +307,29 @@
 <!-- NAV -->
 <nav>
   <a class="logo" href="index.html">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;">
-        <path d="M15 8.5A5.5 5.5 0 1 0 15 15.5" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-        <circle cx="15.5" cy="12" r="1.5" fill="white"/>
-      </svg>
-    </div>
+    <img class="logo-mark" src="clari logo.png" alt="Clari Health logo mark">
     <span class="logo-text"><span class="clari">clari</span><span>health</span></span>
   </a>
   <a href="index.html" style="font-size:0.85rem; color:var(--ocean); text-decoration:none; font-weight:500;">← Back to home</a>
 </nav>
 
-<!-- CONTENT -->
-<div class="page-wrap">
+<!-- Top hero: same blob atmosphere as home, policy title only -->
+<section class="page-hero" aria-label="Privacy policy header">
+  <div class="hero-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+  <div class="page-hero-inner">
+    <div class="page-label">Legal</div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-date">Last updated: May 2026</p>
+  </div>
+</section>
 
-  <div class="page-label">Legal</div>
-  <h1 class="page-title">Privacy Policy</h1>
-  <p class="page-date">Last updated: May 2025</p>
+<!-- CONTENT -->
+<div class="page-wrap" id="policy">
 
   <div class="highlight-box">
     <p>We keep this simple and in plain English. We collect very little data, we never sell it, and you can ask us to delete it at any time.</p>
@@ -236,7 +339,7 @@
   <p>Clari Health is a digital health platform dedicated to women's health education and informed consent. We are the data controller for the personal information collected through this website.</p>
   <p>
     <strong>Company name:</strong> Clari Health<br>
-    <strong>Registered address:</strong> [78 Bawtry Road, Doncaster, DN4 7BQ]<br>
+    <strong>Registered address:</strong> 78 Bawtry Road, Doncaster, DN4 7BQ<br>
     <strong>Contact email:</strong> <a href="mailto:hello@clarihealth.uk">hello@clarihealth.uk</a>
   </p>
 
@@ -281,7 +384,7 @@
   <p>To exercise any of these rights, please contact us at <a href="mailto:hello@clarihealth.uk">hello@clarihealth.uk</a>.</p>
 
   <h2>9. Children's data</h2>
-  <p>Our website is not directed at children under the age of 13 and we do not knowingly collect personal data from children. If you believe a child has provided us with their personal data, please contact us and we will delete it promptly.</p>
+  <p>Our website is not directed at children under the age of 16 and we do not knowingly collect personal data from children. If you believe a child has provided us with their personal data, please contact us and we will delete it promptly.</p>
 
   <h2>10. Changes to this policy</h2>
   <p>We may update this privacy policy from time to time as our platform develops. We will always update the "last updated" date at the top of this page. We encourage you to check back periodically.</p>
@@ -290,7 +393,7 @@
   <p>If you have any questions about this privacy policy or how we handle your data, please get in touch:</p>
   <p>
     <strong>Email:</strong> <a href="mailto:hello@clarihealth.uk">hello@clarihealth.uk</a><br>
-    <strong>Address:</strong> [78 Bawtry Road, Doncaster, DN4 7BQ]
+    <strong>Address:</strong> 78 Bawtry Road, Doncaster, DN4 7BQ
   </p>
 
 </div>
@@ -298,7 +401,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <p class="footer-copy">© 2025 Clari Health. All rights reserved.</p>
+    <p class="footer-copy">© 2026 Clari Health. All rights reserved.</p>
     <div class="footer-links">
       <a href="privacy.html">Privacy</a>
       <a href="mailto:hello@clarihealth.uk">Contact</a>
