@@ -358,6 +358,19 @@
       0 0 30px rgba(39,138,180,0.14);
   }
 
+  .insight-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.65rem;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, rgba(255,227,161,0.6) 0%, rgba(174,224,244,0.35) 100%);
+    border: 1px solid rgba(255,227,161,0.7);
+  }
+
   .insight-title {
     font-size: 0.92rem;
     font-weight: 600;
@@ -521,10 +534,10 @@
 
   .feature-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(39,138,180,0.38);
+    border-color: rgba(255,227,161,0.95);
     box-shadow:
-      0 12px 36px rgba(39,138,180,0.12),
-      0 0 36px rgba(39,138,180,0.14);
+      0 12px 36px rgba(255,227,161,0.34),
+      0 0 36px rgba(255,227,161,0.45);
   }
 
   .feature-icon {
@@ -937,18 +950,22 @@
     </div>
     <div class="insights-grid">
       <div class="insight-card reveal">
+        <div class="insight-icon" aria-hidden="true">🌐</div>
         <div class="insight-title">Information in more languages</div>
         <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
       </div>
       <div class="insight-card reveal">
+        <div class="insight-icon" aria-hidden="true">🗣️</div>
         <div class="insight-title">Faster access to interpreters</div>
         <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
       </div>
       <div class="insight-card reveal">
+        <div class="insight-icon" aria-hidden="true">🤝</div>
         <div class="insight-title">Cultural understanding in care</div>
         <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
       </div>
       <div class="insight-card reveal">
+        <div class="insight-icon" aria-hidden="true">📋</div>
         <div class="insight-title">Clearer explanations from staff</div>
         <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
       </div>
