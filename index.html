@@ -347,6 +347,7 @@
   /* ── CARD CAROUSELS: stacked deck, one front card, infinite next/prev ── */
   .card-carousel {
     --carousel-card-width: min(100%, 22.5rem);
+    --carousel-shift-duration: 0.72s;
     position: relative;
     width: 100%;
     max-width: 1040px;
@@ -383,6 +384,20 @@
     height: var(--carousel-card-height);
     min-height: var(--carousel-card-height);
     margin: 0 auto;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .carousel-stack .insight-text,
+  .carousel-stack .feature-desc,
+  .carousel-stack .content-body,
+  .carousel-stack .insight-title,
+  .carousel-stack .feature-title,
+  .carousel-stack .content-title {
+    -webkit-user-select: text;
+    user-select: text;
+    touch-action: pan-y;
   }
 
   .carousel-stack .carousel-item {
@@ -398,10 +413,10 @@
     overflow: hidden;
     transform-origin: center center;
     transition:
-      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.45s ease,
-      box-shadow 0.45s ease,
-      filter 0.45s ease;
+      transform var(--carousel-shift-duration) cubic-bezier(0.22, 1, 0.36, 1),
+      opacity calc(var(--carousel-shift-duration) * 0.88) ease,
+      box-shadow calc(var(--carousel-shift-duration) * 0.88) ease,
+      filter calc(var(--carousel-shift-duration) * 0.88) ease;
     pointer-events: none;
     will-change: transform, opacity;
   }
@@ -509,6 +524,8 @@
     z-index: 5;
     width: 44px;
     height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     border-radius: 50%;
     border: 1px solid rgba(39,138,180,0.25);
     background: rgba(255,255,255,0.98);
@@ -519,6 +536,8 @@
     justify-content: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     box-shadow: 0 4px 16px rgba(39,138,180,0.14);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(39, 138, 180, 0.12);
   }
 
   .carousel-btn.carousel-prev { left: clamp(0.15rem, 1.5vw, 0.35rem); }
@@ -533,6 +552,12 @@
   .carousel-btn svg {
     width: 18px;
     height: 18px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-carousel {
+      --carousel-shift-duration: 0.12s;
+    }
   }
 
   @media (max-width: 480px) {
@@ -553,8 +578,14 @@
       height: 104px;
     }
     .carousel-btn {
-      width: 38px;
-      height: 38px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+    }
+    .carousel-btn svg {
+      width: 20px;
+      height: 20px;
     }
   }
 
@@ -1554,13 +1585,18 @@
 
         let halfW = 0;
         const probe = els[activeIndex] || els[0];
+        const narrow =
+          typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(max-width: 540px)').matches;
+        const peekFactor = narrow ? 0.4 : 0.5;
         if (probe) {
           const r = probe.getBoundingClientRect();
-          halfW = r.width > 4 ? r.width * 0.5 : 0;
+          halfW = r.width > 4 ? r.width * peekFactor : 0;
         }
         if (halfW < 4) {
           const w = parseFloat(getComputedStyle(probe).width) || 0;
-          halfW = w > 4 ? w * 0.5 : 160;
+          halfW = w > 4 ? w * peekFactor : narrow ? 128 : 160;
         }
 
         els.forEach((el, i) => {
@@ -1630,6 +1666,54 @@
           apply();
         });
       }
+
+      const SWIPE_MIN_PX = 48;
+      let touchStartX = null;
+      let touchStartY = null;
+      stack.addEventListener(
+        'touchstart',
+        (e) => {
+          if (e.touches.length !== 1) return;
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        },
+        { passive: true }
+      );
+      stack.addEventListener(
+        'touchend',
+        (e) => {
+          if (touchStartX == null || touchStartY == null) return;
+          const t = e.changedTouches[0];
+          if (!t) {
+            touchStartX = null;
+            touchStartY = null;
+            return;
+          }
+          const dx = t.clientX - touchStartX;
+          const dy = t.clientY - touchStartY;
+          touchStartX = null;
+          touchStartY = null;
+          if (Math.abs(dx) < SWIPE_MIN_PX) return;
+          if (Math.abs(dy) >= Math.abs(dx)) return;
+          const n = items().length;
+          if (n === 0) return;
+          if (dx < 0) {
+            activeIndex = (activeIndex + 1) % n;
+          } else {
+            activeIndex = (activeIndex - 1 + n) % n;
+          }
+          apply();
+        },
+        { passive: true }
+      );
+      stack.addEventListener(
+        'touchcancel',
+        () => {
+          touchStartX = null;
+          touchStartY = null;
+        },
+        { passive: true }
+      );
 
       const ro = new ResizeObserver(() => apply());
       ro.observe(stack);
