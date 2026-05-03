@@ -44,7 +44,7 @@
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 9000;
     padding: 1.25rem 2.5rem;
     display: flex;
     align-items: center;
@@ -294,23 +294,15 @@
     background: linear-gradient(180deg, rgba(174,224,244,0.3) 0%, rgba(213,211,255,0.16) 100%);
     border-top: 1px solid rgba(174,224,244,0.4);
     border-bottom: 1px solid rgba(174,224,244,0.4);
+    overflow-x: visible;
   }
 
   .insights-inner {
-    max-width: 980px;
+    max-width: 1040px;
     margin: 2.5rem auto 0;
   }
 
-  .insights-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
   .insight-card {
-    flex: 1 1 220px;
-    max-width: 240px;
     background: white;
     border-radius: 16px;
     border: 1px solid rgba(174,224,244,0.55);
@@ -319,7 +311,6 @@
   }
 
   .insight-card:hover {
-    transform: translateY(-3px);
     border-color: rgba(39,138,180,0.38);
     box-shadow:
       0 12px 30px rgba(39,138,180,0.11),
@@ -351,6 +342,220 @@
     color: var(--text-secondary);
     line-height: 1.55;
     font-weight: 300;
+  }
+
+  /* ── CARD CAROUSELS: stacked deck, one front card, infinite next/prev ── */
+  .card-carousel {
+    --carousel-card-width: min(100%, 22.5rem);
+    position: relative;
+    width: 100%;
+    max-width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.75rem clamp(2.75rem, 8vw, 3.75rem) 2rem;
+    box-sizing: border-box;
+  }
+
+  /* Same card size within each section only (heights tuned per block) */
+  .card-carousel[data-carousel-kind="insights"] {
+    --carousel-card-height: 16.5rem;
+  }
+
+  .card-carousel[data-carousel-kind="features"] {
+    --carousel-card-height: 17.5rem;
+  }
+
+  .card-carousel[data-carousel-kind="content"] {
+    --carousel-card-height: 19rem;
+  }
+
+  .carousel-viewport.carousel-stack-viewport {
+    position: relative;
+    z-index: 1;
+    width: min(100%, calc(2 * var(--carousel-card-width) + 3.25rem));
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .carousel-stack {
+    position: relative;
+    width: 100%;
+    height: var(--carousel-card-height);
+    min-height: var(--carousel-card-height);
+    margin: 0 auto;
+  }
+
+  .carousel-stack .carousel-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--carousel-card-width);
+    max-width: min(100%, var(--carousel-card-width));
+    height: var(--carousel-card-height);
+    max-height: var(--carousel-card-height);
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    transform-origin: center center;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s ease,
+      box-shadow 0.45s ease,
+      filter 0.45s ease;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .carousel-stack .insight-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .carousel-stack .insight-text {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .carousel-stack .feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .carousel-stack .feature-desc {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .carousel-stack .content-card {
+    align-items: center;
+    text-align: center;
+  }
+
+  .carousel-stack .content-thumb {
+    flex-shrink: 0;
+    height: 118px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .carousel-stack .content-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .carousel-stack .insight-icon,
+  .carousel-stack .feature-icon {
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .carousel-stack .carousel-item.is-front {
+    pointer-events: auto;
+    filter: none;
+    box-shadow:
+      0 10px 36px rgba(39, 138, 180, 0.18),
+      0 0 0 1px rgba(174, 224, 244, 0.55),
+      0 0 48px rgba(155, 153, 212, 0.35),
+      0 0 72px rgba(255, 227, 161, 0.35);
+  }
+
+  .carousel-stack .carousel-item.is-behind:not(.is-peek) {
+    box-shadow: 0 14px 32px rgba(15, 31, 42, 0.1);
+    filter: saturate(0.92) brightness(0.97);
+  }
+
+  .carousel-stack .carousel-item.is-peek.is-behind {
+    filter: saturate(0.94) brightness(0.96);
+    box-shadow:
+      0 6px 18px rgba(15, 31, 42, 0.12),
+      0 18px 42px rgba(15, 31, 42, 0.2),
+      0 28px 56px rgba(15, 31, 42, 0.14),
+      0 0 0 1px rgba(39, 138, 180, 0.12);
+  }
+
+  .carousel-stack .insight-card,
+  .carousel-stack .feature-card,
+  .carousel-stack .content-card {
+    max-width: none;
+  }
+
+  .carousel-stack .insight-card.is-front:hover,
+  .carousel-stack .feature-card.is-front:hover,
+  .carousel-stack .content-card.is-front:hover {
+    box-shadow:
+      0 14px 44px rgba(39, 138, 180, 0.26),
+      0 0 0 1px rgba(174, 224, 244, 0.65),
+      0 0 56px rgba(155, 153, 212, 0.42),
+      0 0 84px rgba(255, 227, 161, 0.38);
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(39,138,180,0.25);
+    background: rgba(255,255,255,0.98);
+    color: var(--ocean-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 16px rgba(39,138,180,0.14);
+  }
+
+  .carousel-btn.carousel-prev { left: clamp(0.15rem, 1.5vw, 0.35rem); }
+  .carousel-btn.carousel-next { right: clamp(0.15rem, 1.5vw, 0.35rem); }
+
+  .carousel-btn:hover {
+    transform: translateY(-50%) scale(1.07);
+    border-color: rgba(39,138,180,0.45);
+    box-shadow: 0 8px 22px rgba(39,138,180,0.2);
+  }
+
+  .carousel-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 480px) {
+    .card-carousel {
+      --carousel-card-width: min(100%, 19.5rem);
+      padding: 0.65rem 3rem 1.85rem;
+    }
+    .card-carousel[data-carousel-kind="insights"] {
+      --carousel-card-height: 15rem;
+    }
+    .card-carousel[data-carousel-kind="features"] {
+      --carousel-card-height: 16rem;
+    }
+    .card-carousel[data-carousel-kind="content"] {
+      --carousel-card-height: 17.25rem;
+    }
+    .carousel-stack .content-thumb {
+      height: 104px;
+    }
+    .carousel-btn {
+      width: 38px;
+      height: 38px;
+    }
   }
 
   /* ── SECTION COMMON ── */
@@ -503,10 +708,11 @@
   }
 
   /* ── FEATURES ── */
+  #features {
+    overflow-x: visible;
+  }
+
   .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
     margin-top: 3rem;
   }
 
@@ -519,7 +725,6 @@
   }
 
   .feature-card:hover {
-    transform: translateY(-4px);
     border-color: rgba(255,227,161,0.95);
     box-shadow:
       0 12px 36px rgba(255,227,161,0.34),
@@ -637,19 +842,14 @@
   /* ── COMING SOON CONTENT ── */
   .content-section {
     background: #eef8fc;
+    overflow-x: visible;
   }
 
   .content-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.25rem;
     margin-top: 3rem;
   }
 
   .content-card {
-    flex: 1 1 290px;
-    max-width: 320px;
     background: white;
     border: 1px solid rgba(174,224,244,0.45);
     border-radius: 18px;
@@ -660,7 +860,6 @@
   }
 
   .content-card:hover {
-    transform: translateY(-3px);
     border-color: rgba(39,138,180,0.38);
     box-shadow:
       0 14px 40px rgba(39,138,180,0.11),
@@ -1015,27 +1214,37 @@
     </p>
   </div>
   <div class="insights-inner">
-    <div class="insights-grid">
-      <div class="insight-card reveal">
-        <div class="insight-icon" aria-hidden="true">🌐</div>
-        <div class="insight-title">Information in more languages</div>
-        <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
+    <div class="card-carousel" data-carousel data-carousel-kind="insights">
+      <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel-viewport carousel-stack-viewport">
+        <div class="carousel-stack">
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🌐</div>
+            <div class="insight-title">Information in more languages</div>
+            <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🗣️</div>
+            <div class="insight-title">Faster access to interpreters</div>
+            <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🤝</div>
+            <div class="insight-title">Cultural understanding in care</div>
+            <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">📋</div>
+            <div class="insight-title">Clearer explanations from staff</div>
+            <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
+          </div>
+        </div>
       </div>
-      <div class="insight-card reveal">
-        <div class="insight-icon" aria-hidden="true">🗣️</div>
-        <div class="insight-title">Faster access to interpreters</div>
-        <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
-      </div>
-      <div class="insight-card reveal">
-        <div class="insight-icon" aria-hidden="true">🤝</div>
-        <div class="insight-title">Cultural understanding in care</div>
-        <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
-      </div>
-      <div class="insight-card reveal">
-        <div class="insight-icon" aria-hidden="true">📋</div>
-        <div class="insight-title">Clearer explanations from staff</div>
-        <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
-      </div>
+      <button type="button" class="carousel-btn carousel-next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </div>
 </section>
@@ -1050,35 +1259,47 @@
     </p>
 
     <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-blue">🎬</div>
-        <div class="feature-title">Animated patient videos</div>
-        <p class="feature-desc">Professionally animated explanations of common women's health procedures, engaging, accessible, and clinically accurate.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-lavender">🌍</div>
-        <div class="feature-title">Multilingual narration</div>
-        <p class="feature-desc">Content available in multiple languages with authentic narration, removing language as a barrier to understanding care.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-butter">🤝</div>
-        <div class="feature-title">Cultural sensitivity</div>
-        <p class="feature-desc">Developed with input from diverse communities, addressing the specific needs of ethnic minority women who face the greatest health inequalities.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-apricot">📋</div>
-        <div class="feature-title">Infographic guides</div>
-        <p class="feature-desc">Clear, visual infographic guides patients can access at home before and after appointments, empowering shared decision-making.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-blue">🏥</div>
-        <div class="feature-title">NHS e-consent integration</div>
-        <p class="feature-desc">Designed to integrate seamlessly into existing NHS e-consent systems, scalable and built to meet NHS standards.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon icon-lavender">⚕️</div>
-        <div class="feature-title">For clinicians & patients</div>
-        <p class="feature-desc">Usable in clinics, community settings, and at home, supporting the full patient journey from first conversation to consent.</p>
+      <div class="card-carousel" data-carousel data-carousel-kind="features">
+        <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="carousel-viewport carousel-stack-viewport">
+          <div class="carousel-stack">
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-blue">🎬</div>
+              <div class="feature-title">Animated patient videos</div>
+              <p class="feature-desc">Professionally animated explanations of common women's health procedures, engaging, accessible, and clinically accurate.</p>
+            </div>
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-lavender">🌍</div>
+              <div class="feature-title">Multilingual narration</div>
+              <p class="feature-desc">Content available in multiple languages with authentic narration, removing language as a barrier to understanding care.</p>
+            </div>
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-butter">🤝</div>
+              <div class="feature-title">Cultural sensitivity</div>
+              <p class="feature-desc">Developed with input from diverse communities, addressing the specific needs of ethnic minority women who face the greatest health inequalities.</p>
+            </div>
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-apricot">📋</div>
+              <div class="feature-title">Infographic guides</div>
+              <p class="feature-desc">Clear, visual infographic guides patients can access at home before and after appointments, empowering shared decision-making.</p>
+            </div>
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-blue">🏥</div>
+              <div class="feature-title">NHS e-consent integration</div>
+              <p class="feature-desc">Designed to integrate seamlessly into existing NHS e-consent systems, scalable and built to meet NHS standards.</p>
+            </div>
+            <div class="feature-card carousel-item reveal">
+              <div class="feature-icon icon-lavender">⚕️</div>
+              <div class="feature-title">For clinicians & patients</div>
+              <p class="feature-desc">Usable in clinics, community settings, and at home, supporting the full patient journey from first conversation to consent.</p>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="carousel-btn carousel-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
 
@@ -1160,55 +1381,67 @@
       Our team is actively developing animated videos and infographic guides across a wide range of women's health topics. Here's a preview of what's on the way.
     </p>
     <div class="content-grid">
-      <div class="content-card reveal">
-        <div class="content-thumb thumb-blue">
-          <span class="thumb-icon">💉</span>
-          <span class="thumb-tag">Video + Guide</span>
+      <div class="card-carousel" data-carousel data-carousel-kind="content">
+        <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="carousel-viewport carousel-stack-viewport">
+          <div class="carousel-stack">
+            <div class="content-card carousel-item reveal">
+              <div class="content-thumb thumb-blue">
+                <span class="thumb-icon">💉</span>
+                <span class="thumb-tag">Video + Guide</span>
+              </div>
+              <div class="content-body">
+                <div class="content-title">Types of obstetric anaesthesia</div>
+                <p class="content-desc">Understand epidural, spinal, and general anaesthetic options. Learn what each one involves, the benefits and risks, and what recovery may feel like.</p>
+              </div>
+            </div>
+            <div class="content-card carousel-item reveal">
+              <div class="content-thumb thumb-lavender">
+                <span class="thumb-icon">🤰</span>
+                <span class="thumb-tag">Video + Guide</span>
+              </div>
+              <div class="content-body">
+                <div class="content-title">Caesarean section</div>
+                <p class="content-desc">Learn about planned and emergency caesarean sections. We explain what happens on the day, the main benefits and risks, and what recovery can feel like.</p>
+              </div>
+            </div>
+            <div class="content-card carousel-item reveal">
+              <div class="content-thumb thumb-warm">
+                <span class="thumb-icon">🔎</span>
+                <span class="thumb-tag">Video + Guide</span>
+              </div>
+              <div class="content-body">
+                <div class="content-title">Hysteroscopy</div>
+                <p class="content-desc">Find out what a hysteroscopy is, why you may need one, and how to prepare. You can also see what to expect during the procedure and after.</p>
+              </div>
+            </div>
+            <div class="content-card carousel-item reveal">
+              <div class="content-thumb thumb-blue">
+                <span class="thumb-icon">🏥</span>
+                <span class="thumb-tag">Video + Guide</span>
+              </div>
+              <div class="content-body">
+                <div class="content-title">Laparoscopy</div>
+                <p class="content-desc">A simple guide to keyhole surgery. Understand why it is offered, what happens during surgery, and what recovery usually looks like.</p>
+              </div>
+            </div>
+            <div class="content-card carousel-item reveal">
+              <div class="content-thumb thumb-mix">
+                <span class="thumb-icon">💊</span>
+                <span class="thumb-tag">Infographic</span>
+              </div>
+              <div class="content-body">
+                <div class="content-title">Contraception options</div>
+                <p class="content-desc">Compare methods side by side in clear language, so you can decide what feels right for you.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="content-body">
-          <div class="content-title">Types of obstetric anaesthesia</div>
-          <p class="content-desc">Understand epidural, spinal, and general anaesthetic options. Learn what each one involves, the benefits and risks, and what recovery may feel like.</p>
-        </div>
-      </div>
-      <div class="content-card reveal">
-        <div class="content-thumb thumb-lavender">
-          <span class="thumb-icon">🤰</span>
-          <span class="thumb-tag">Video + Guide</span>
-        </div>
-        <div class="content-body">
-          <div class="content-title">Caesarean section</div>
-          <p class="content-desc">Learn about planned and emergency caesarean sections. We explain what happens on the day, the main benefits and risks, and what recovery can feel like.</p>
-        </div>
-      </div>
-      <div class="content-card reveal">
-        <div class="content-thumb thumb-warm">
-          <span class="thumb-icon">🔎</span>
-          <span class="thumb-tag">Video + Guide</span>
-        </div>
-        <div class="content-body">
-          <div class="content-title">Hysteroscopy</div>
-          <p class="content-desc">Find out what a hysteroscopy is, why you may need one, and how to prepare. You can also see what to expect during the procedure and after.</p>
-        </div>
-      </div>
-      <div class="content-card reveal">
-        <div class="content-thumb thumb-blue">
-          <span class="thumb-icon">🏥</span>
-          <span class="thumb-tag">Video + Guide</span>
-        </div>
-        <div class="content-body">
-          <div class="content-title">Laparoscopy</div>
-          <p class="content-desc">A simple guide to keyhole surgery. Understand why it is offered, what happens during surgery, and what recovery usually looks like.</p>
-        </div>
-      </div>
-      <div class="content-card reveal">
-        <div class="content-thumb thumb-mix">
-          <span class="thumb-icon">💊</span>
-          <span class="thumb-tag">Infographic</span>
-        </div>
-        <div class="content-body">
-          <div class="content-title">Contraception options</div>
-          <p class="content-desc">Compare methods side by side in clear language, so you can decide what feels right for you.</p>
-        </div>
+        <button type="button" class="carousel-btn carousel-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -1301,6 +1534,109 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  (function initCardCarousels() {
+    document.querySelectorAll('[data-carousel]').forEach((root) => {
+      const stack = root.querySelector('.carousel-stack');
+      const prevBtn = root.querySelector('.carousel-prev');
+      const nextBtn = root.querySelector('.carousel-next');
+      if (!stack) return;
+
+      const items = () => Array.from(stack.querySelectorAll('.carousel-item'));
+      let activeIndex = 0;
+
+      function apply() {
+        const els = items();
+        const n = els.length;
+        if (n === 0) return;
+
+        activeIndex = ((activeIndex % n) + n) % n;
+
+        let halfW = 0;
+        const probe = els[activeIndex] || els[0];
+        if (probe) {
+          const r = probe.getBoundingClientRect();
+          halfW = r.width > 4 ? r.width * 0.5 : 0;
+        }
+        if (halfW < 4) {
+          const w = parseFloat(getComputedStyle(probe).width) || 0;
+          halfW = w > 4 ? w * 0.5 : 160;
+        }
+
+        els.forEach((el, i) => {
+          const rel = (i - activeIndex + n) % n;
+          let offsetX = 0;
+          let offsetY = 0;
+          let scale = 1;
+          let opacity = 1;
+          let z = 100;
+
+          if (rel === 0) {
+            offsetX = 0;
+            offsetY = 0;
+            scale = 1;
+            opacity = 1;
+            z = 100;
+          } else if (n === 2) {
+            offsetX = 0;
+            offsetY = 0;
+            scale = 0.92;
+            opacity = 0.4;
+            z = 88;
+          } else if (rel === 1) {
+            offsetX = Math.round(halfW);
+            offsetY = 0;
+            scale = 1;
+            opacity = 0.95;
+            z = 93;
+          } else if (rel === n - 1) {
+            offsetX = -Math.round(halfW);
+            offsetY = 0;
+            scale = 1;
+            opacity = 0.95;
+            z = 92;
+          } else {
+            offsetX = 0;
+            offsetY = 10 + rel * 6;
+            scale = Math.max(0.78, 0.88 - rel * 0.028);
+            opacity = Math.max(0.16, 0.38 - rel * 0.07);
+            z = 72 - rel;
+          }
+
+          el.style.transform =
+            'translate3d(calc(-50% + ' + offsetX + 'px), calc(-50% + ' + offsetY + 'px), 0) scale(' + scale + ')';
+          el.style.opacity = String(opacity);
+          el.style.zIndex = String(z);
+          const isPeek = n > 2 && (rel === 1 || rel === n - 1);
+          el.classList.toggle('is-front', rel === 0);
+          el.classList.toggle('is-behind', rel > 0);
+          el.classList.toggle('is-peek', isPeek);
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          const n = items().length;
+          if (n === 0) return;
+          activeIndex = (activeIndex - 1 + n) % n;
+          apply();
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          const n = items().length;
+          if (n === 0) return;
+          activeIndex = (activeIndex + 1) % n;
+          apply();
+        });
+      }
+
+      const ro = new ResizeObserver(() => apply());
+      ro.observe(stack);
+      apply();
+      requestAnimationFrame(() => apply());
+    });
+  })();
 </script>
 </body>
 </html>
