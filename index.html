@@ -719,24 +719,19 @@
       min-height: auto;
     }
 
-    /* Tight side gutters (~25% of prior mobile padding); safe-area stays full for notched devices */
+    /* Hairline side inset: sliver of section background; safe-area when needed */
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.5rem), 18rem);
-      padding-left: max(
-        calc(3.35rem * 0.25),
-        calc(1.125rem * 0.25 + env(safe-area-inset-left, 0px))
-      );
-      padding-right: max(
-        calc(3.35rem * 0.25),
-        calc(1.125rem * 0.25 + env(safe-area-inset-right, 0px))
-      );
+      --carousel-card-width: min(calc(100% - 0.35rem), 18rem);
+      padding-left: max(0.3rem, env(safe-area-inset-left, 0px));
+      padding-right: max(0.3rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (max-width: 480px) {
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.55rem), 16.75rem);
-      padding: 0.65rem max(calc(3.35rem * 0.25), calc(5.75vw * 0.25)) 1.85rem;
+      --carousel-card-width: min(calc(100% - 0.35rem), 16.75rem);
+      padding: 0.65rem max(0.3rem, env(safe-area-inset-right, 0px)) 1.85rem
+        max(0.3rem, env(safe-area-inset-left, 0px));
     }
     .card-carousel[data-carousel-kind="insights"] {
       --carousel-card-height: 15.5rem;
