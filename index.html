@@ -718,12 +718,19 @@
       flex-shrink: 0;
       min-height: auto;
     }
+
+    /* Keep peek cards off the screen edge: slightly narrower cards + a bit more side padding */
+    .card-carousel {
+      --carousel-card-width: min(calc(100% - 0.75rem), 18rem);
+      padding-left: max(3rem, calc(1rem + env(safe-area-inset-left, 0px)));
+      padding-right: max(3rem, calc(1rem + env(safe-area-inset-right, 0px)));
+    }
   }
 
   @media (max-width: 480px) {
     .card-carousel {
-      --carousel-card-width: min(100%, 19.5rem);
-      padding: 0.65rem 3rem 1.85rem;
+      --carousel-card-width: min(calc(100% - 1rem), 16.75rem);
+      padding: 0.65rem max(3rem, 5vw) 1.85rem;
     }
     .card-carousel[data-carousel-kind="insights"] {
       --carousel-card-height: 15.5rem;
@@ -1877,8 +1884,8 @@
         const narrow =
           typeof window !== 'undefined' &&
           window.matchMedia &&
-          window.matchMedia('(max-width: 540px)').matches;
-        const peekFactor = narrow ? 0.4 : 0.5;
+          window.matchMedia('(max-width: 640px)').matches;
+        const peekFactor = narrow ? 0.28 : 0.5;
         if (probe) {
           const r = probe.getBoundingClientRect();
           halfW = r.width > 4 ? r.width * peekFactor : 0;
