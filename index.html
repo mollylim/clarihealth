@@ -28,6 +28,8 @@
   html {
     font-size: 18px;
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   body {
@@ -38,6 +40,7 @@
     background: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   /* ── NAV ── */
@@ -74,7 +77,7 @@
   .scroll-progress-fill {
     height: 100%;
     width: 0%;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0;
     background: linear-gradient(
       90deg,
       var(--ocean) 0%,
@@ -426,7 +429,7 @@
   /* ── COMMUNITY INSIGHTS ── */
   .insights-strip {
     padding: 4rem 2rem;
-    overflow-x: visible;
+    overflow-x: clip;
     border-top: none;
     border-bottom: none;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
@@ -719,19 +722,19 @@
       min-height: auto;
     }
 
-    /* Side inset between hairline (~0.3rem) and older mobile gutters (~0.84rem) */
+    /* Narrow side inset + tiny background sliver; safe-area on notched phones */
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.45rem), 18rem);
-      padding-left: max(0.65rem, env(safe-area-inset-left, 0px));
-      padding-right: max(0.65rem, env(safe-area-inset-right, 0px));
+      --carousel-card-width: min(calc(100% - 0.32rem), 18rem);
+      padding-left: max(0.4rem, env(safe-area-inset-left, 0px));
+      padding-right: max(0.4rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (max-width: 480px) {
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.45rem), 16.75rem);
-      padding: 0.65rem max(0.65rem, env(safe-area-inset-right, 0px)) 1.85rem
-        max(0.65rem, env(safe-area-inset-left, 0px));
+      --carousel-card-width: min(calc(100% - 0.32rem), 16.75rem);
+      padding: 0.65rem max(0.4rem, env(safe-area-inset-right, 0px)) 1.85rem
+        max(0.4rem, env(safe-area-inset-left, 0px));
     }
     .card-carousel[data-carousel-kind="insights"] {
       --carousel-card-height: 15.5rem;
@@ -924,7 +927,7 @@
 
   /* ── FEATURES ── (soft blue → purple wash) ── */
   #features {
-    overflow-x: visible;
+    overflow-x: clip;
     border-top: none;
     border-bottom: none;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
@@ -1080,7 +1083,7 @@
 
   /* ── COMING SOON CONTENT ── */
   .content-section {
-    overflow-x: visible;
+    overflow-x: clip;
     border-top: none;
     border-bottom: none;
     background:
