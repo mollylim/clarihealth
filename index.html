@@ -94,12 +94,6 @@
     .scroll-progress-fill {
       transition: none;
     }
-    .nav-badge::after {
-      animation: none;
-    }
-    .nav-badge {
-      transform: none;
-    }
   }
 
   .logo {
@@ -130,11 +124,9 @@
   .logo-text span { color: var(--ocean); }
 
   .nav-badge {
-    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -142,58 +134,8 @@
     color: var(--ocean-deeper);
     padding: 0.38rem 0.95rem;
     border-radius: 100px;
-    border: 1px solid rgba(155, 153, 212, 0.48);
-    background: linear-gradient(
-      145deg,
-      #f6f2ff 0%,
-      #ebe4ff 38%,
-      #e2d8f8 72%,
-      #d8cef2 100%
-    );
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.85) inset,
-      0 2px 0 rgba(175, 168, 220, 0.38),
-      0 4px 0 rgba(155, 153, 212, 0.2),
-      0 8px 18px rgba(155, 153, 212, 0.24);
-    transform: translateY(-1px);
-  }
-
-  .nav-badge-text {
-    position: relative;
-    z-index: 1;
-  }
-
-  .nav-badge::after {
-    content: '';
-    position: absolute;
-    top: -40%;
-    left: -30%;
-    width: 45%;
-    height: 180%;
-    background: linear-gradient(
-      105deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0) 35%,
-      rgba(255, 255, 255, 0.65) 50%,
-      rgba(255, 255, 255, 0) 65%,
-      transparent 100%
-    );
-    transform: translateX(-140%) skewX(-18deg);
-    animation: navBadgeShine 5s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes navBadgeShine {
-    0%, 55% {
-      transform: translateX(-160%) skewX(-18deg);
-    }
-    70% {
-      transform: translateX(220%) skewX(-18deg);
-    }
-    100% {
-      transform: translateX(220%) skewX(-18deg);
-    }
+    border: 1px solid rgba(155, 153, 212, 0.42);
+    background: #ebe4ff;
   }
 
   /* ── HERO ── */
