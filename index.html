@@ -722,19 +722,24 @@
       min-height: auto;
     }
 
-    /* Narrow side inset + tiny background sliver; safe-area on notched phones */
+    /* Card slightly narrower than track so peeks can sit inside edges; padding shows section bg */
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.32rem), 18rem);
-      padding-left: max(0.4rem, env(safe-area-inset-left, 0px));
-      padding-right: max(0.4rem, env(safe-area-inset-right, 0px));
+      --carousel-card-width: min(calc(100% - 1.1rem), 18rem);
+      padding-left: max(0.5rem, env(safe-area-inset-left, 0px));
+      padding-right: max(0.5rem, env(safe-area-inset-right, 0px));
+    }
+
+    .carousel-viewport.carousel-stack-viewport {
+      /* On narrow screens the deck does not need extra width beyond the track */
+      width: 100%;
     }
   }
 
   @media (max-width: 480px) {
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.32rem), 16.75rem);
-      padding: 0.65rem max(0.4rem, env(safe-area-inset-right, 0px)) 1.85rem
-        max(0.4rem, env(safe-area-inset-left, 0px));
+      --carousel-card-width: min(calc(100% - 1.1rem), 16.75rem);
+      padding: 0.65rem max(0.5rem, env(safe-area-inset-right, 0px)) 1.85rem
+        max(0.5rem, env(safe-area-inset-left, 0px));
     }
     .card-carousel[data-carousel-kind="insights"] {
       --carousel-card-height: 15.5rem;
@@ -1889,7 +1894,8 @@
           typeof window !== 'undefined' &&
           window.matchMedia &&
           window.matchMedia('(max-width: 640px)').matches;
-        const peekFactor = narrow ? 0.28 : 0.5;
+        /* Mobile: smaller factor + clamp below keeps peek card edges inside the stack (and screen) */
+        const peekFactor = narrow ? 0.17 : 0.5;
         if (probe) {
           const r = probe.getBoundingClientRect();
           halfW = r.width > 4 ? r.width * peekFactor : 0;
@@ -1897,6 +1903,15 @@
         if (halfW < 4) {
           const w = parseFloat(getComputedStyle(probe).width) || 0;
           halfW = w > 4 ? w * peekFactor : narrow ? 128 : 160;
+        }
+        if (narrow && stack && probe) {
+          const sw = stack.getBoundingClientRect().width;
+          const cw = probe.getBoundingClientRect().width;
+          if (sw > 8 && cw > 8) {
+            const edgeSlackPx = 6;
+            const maxShift = Math.max(0, (sw - cw) / 2 - edgeSlackPx);
+            halfW = Math.min(halfW, maxShift);
+          }
         }
 
         els.forEach((el, i) => {
