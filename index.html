@@ -719,19 +719,19 @@
       min-height: auto;
     }
 
-    /* Hairline side inset: sliver of section background; safe-area when needed */
+    /* Side inset between hairline (~0.3rem) and older mobile gutters (~0.84rem) */
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.35rem), 18rem);
-      padding-left: max(0.3rem, env(safe-area-inset-left, 0px));
-      padding-right: max(0.3rem, env(safe-area-inset-right, 0px));
+      --carousel-card-width: min(calc(100% - 0.45rem), 18rem);
+      padding-left: max(0.65rem, env(safe-area-inset-left, 0px));
+      padding-right: max(0.65rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (max-width: 480px) {
     .card-carousel {
-      --carousel-card-width: min(calc(100% - 0.35rem), 16.75rem);
-      padding: 0.65rem max(0.3rem, env(safe-area-inset-right, 0px)) 1.85rem
-        max(0.3rem, env(safe-area-inset-left, 0px));
+      --carousel-card-width: min(calc(100% - 0.45rem), 16.75rem);
+      padding: 0.65rem max(0.65rem, env(safe-area-inset-right, 0px)) 1.85rem
+        max(0.65rem, env(safe-area-inset-left, 0px));
     }
     .card-carousel[data-carousel-kind="insights"] {
       --carousel-card-height: 15.5rem;
