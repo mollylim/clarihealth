@@ -89,6 +89,12 @@
     .scroll-progress-fill {
       transition: none;
     }
+    .nav-badge::after {
+      animation: none;
+    }
+    .nav-badge {
+      transform: none;
+    }
   }
 
   .logo {
@@ -119,14 +125,70 @@
   .logo-text span { color: var(--ocean); }
 
   .nav-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--ocean);
-    background: rgba(174,224,244,0.35);
-    border: 1px solid rgba(39,138,180,0.2);
-    padding: 0.3rem 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ocean-deeper);
+    padding: 0.38rem 0.95rem;
     border-radius: 100px;
-    letter-spacing: 0.02em;
+    border: 1px solid rgba(155, 153, 212, 0.48);
+    background: linear-gradient(
+      145deg,
+      #f6f2ff 0%,
+      #ebe4ff 38%,
+      #e2d8f8 72%,
+      #d8cef2 100%
+    );
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.85) inset,
+      0 2px 0 rgba(175, 168, 220, 0.38),
+      0 4px 0 rgba(155, 153, 212, 0.2),
+      0 8px 18px rgba(155, 153, 212, 0.24);
+    transform: translateY(-1px);
+  }
+
+  .nav-badge-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-badge::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -30%;
+    width: 45%;
+    height: 180%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 255, 255, 0.65) 50%,
+      rgba(255, 255, 255, 0) 65%,
+      transparent 100%
+    );
+    transform: translateX(-140%) skewX(-18deg);
+    animation: navBadgeShine 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes navBadgeShine {
+    0%, 55% {
+      transform: translateX(-160%) skewX(-18deg);
+    }
+    70% {
+      transform: translateX(220%) skewX(-18deg);
+    }
+    100% {
+      transform: translateX(220%) skewX(-18deg);
+    }
   }
 
   /* ── HERO ── */
@@ -141,7 +203,7 @@
     position: relative;
     overflow: hidden;
     background: linear-gradient(180deg, #ffffff 0%, rgba(247, 251, 253, 0.65) 100%);
-    border-bottom: 1px solid rgba(39, 138, 180, 0.12);
+    border-bottom: none;
     box-shadow: 0 20px 50px rgba(15, 74, 99, 0.05);
   }
 
@@ -204,27 +266,65 @@
   }
 
   .eyebrow {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ocean);
-    background: rgba(39,138,180,0.08);
-    border: 1px solid rgba(39,138,180,0.18);
+    color: var(--ocean-deeper);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(247, 251, 253, 0.96) 100%
+    );
+    border: 1px solid rgba(174, 224, 244, 0.4);
     padding: 0.4rem 1rem;
     border-radius: 100px;
     margin-bottom: 2rem;
     opacity: 0;
     animation: fadeUp 0.8s ease forwards 0.2s;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+      0 0 22px rgba(255, 227, 161, 0.48),
+      0 0 40px rgba(254, 213, 148, 0.26),
+      0 0 58px rgba(255, 227, 161, 0.14),
+      0 5px 16px rgba(39, 138, 180, 0.07);
+  }
+
+  .eyebrow-inner {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    position: absolute;
+    inset: -11px;
+    border-radius: 100px;
+    background: radial-gradient(
+      ellipse 80% 115% at 50% 50%,
+      rgba(255, 227, 161, 0.38) 0%,
+      rgba(254, 213, 148, 0.14) 44%,
+      transparent 71%
+    );
+    z-index: -1;
+    filter: blur(9px);
+    pointer-events: none;
+    opacity: 0.74;
   }
 
   .eyebrow-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--ocean);
+    box-shadow: 0 0 8px rgba(255, 227, 161, 0.58);
     animation: pulse 2s ease-in-out infinite;
   }
 
@@ -326,16 +426,19 @@
   /* ── COMMUNITY INSIGHTS ── */
   .insights-strip {
     padding: 4rem 2rem;
-    background: linear-gradient(
-      180deg,
-      rgba(213, 211, 255, 0.42) 0%,
-      rgba(174, 224, 244, 0.28) 50%,
-      rgba(247, 251, 253, 0.98) 100%
-    );
-    border-top: 2px solid rgba(155, 153, 212, 0.35);
-    border-bottom: 2px solid rgba(39, 138, 180, 0.16);
     overflow-x: visible;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    background:
+      linear-gradient(180deg, rgba(228, 220, 255, 0.45) 0%, transparent 11%),
+      linear-gradient(180deg, transparent 84%, rgba(228, 242, 252, 0.55) 93%, rgba(220, 236, 246, 0.52) 100%),
+      linear-gradient(
+        180deg,
+        rgba(213, 211, 255, 0.42) 0%,
+        rgba(174, 224, 244, 0.28) 50%,
+        rgba(247, 251, 253, 0.98) 100%
+      );
   }
 
   .insights-inner {
@@ -695,14 +798,27 @@
     margin-right: auto;
   }
 
-  /* ── MISSION ── */
+  /* ── MISSION ── (soft blue + pale yellow from centre) ── */
   .mission {
-    border-top: 3px solid rgba(255, 227, 161, 0.95);
-    border-bottom: 1px solid rgba(155, 153, 212, 0.25);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
     background:
-      radial-gradient(ellipse 120% 85% at 50% 0%, rgba(255,227,161,0.92) 0%, rgba(254,213,148,0.45) 42%, transparent 72%),
-      linear-gradient(180deg, rgba(255,227,161,0.55) 0%, rgba(255,250,235,0.9) 38%, rgba(247,251,253,0.98) 100%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      linear-gradient(180deg, rgba(236, 240, 252, 0.75) 0%, transparent 12%),
+      linear-gradient(180deg, transparent 84%, rgba(232, 244, 248, 0.5) 92%, rgba(226, 236, 244, 0.48) 100%),
+      radial-gradient(
+        ellipse 72% 65% at 50% 48%,
+        rgba(255, 248, 220, 0.82) 0%,
+        rgba(255, 241, 200, 0.42) 28%,
+        rgba(255, 236, 190, 0.12) 52%,
+        transparent 72%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(228, 242, 252, 0.99) 0%,
+        rgba(218, 236, 248, 0.97) 38%,
+        rgba(232, 244, 250, 0.98) 100%
+      );
   }
 
   .mission-text {
@@ -798,13 +914,23 @@
     background: rgba(174,224,244,0.2);
   }
 
-  /* ── FEATURES ── */
+  /* ── FEATURES ── (soft blue → purple wash) ── */
   #features {
     overflow-x: visible;
-    background: linear-gradient(180deg, #ffffff 0%, #f7fbfd 45%, #ffffff 100%);
-    border-top: 1px solid rgba(15, 74, 99, 0.07);
-    border-bottom: 1px solid rgba(174, 224, 244, 0.35);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    background:
+      linear-gradient(180deg, rgba(247, 251, 253, 0.65) 0%, transparent 9%),
+      linear-gradient(180deg, transparent 82%, rgba(218, 212, 242, 0.38) 92%, rgba(210, 204, 236, 0.32) 100%),
+      linear-gradient(
+        128deg,
+        rgba(220, 240, 250, 0.92) 0%,
+        rgba(210, 234, 248, 0.88) 22%,
+        rgba(218, 228, 252, 0.82) 45%,
+        rgba(228, 220, 255, 0.68) 72%,
+        rgba(236, 230, 255, 0.78) 100%
+      );
   }
 
   .features-grid {
@@ -884,14 +1010,17 @@
 
   /* ── WHY SECTION ── */
   .why {
-    border-top: 2px solid rgba(39, 138, 180, 0.22);
-    border-bottom: 1px solid rgba(155, 153, 212, 0.2);
-    background: linear-gradient(
-      168deg,
-      rgba(39, 138, 180, 0.18) 0%,
-      rgba(213, 211, 255, 0.34) 48%,
-      rgba(255, 227, 161, 0.28) 100%
-    );
+    border-top: none;
+    border-bottom: none;
+    background:
+      linear-gradient(180deg, rgba(224, 238, 248, 0.7) 0%, transparent 13%),
+      linear-gradient(180deg, transparent 82%, rgba(214, 232, 244, 0.42) 91%, rgba(206, 228, 240, 0.45) 100%),
+      linear-gradient(
+        168deg,
+        rgba(39, 138, 180, 0.18) 0%,
+        rgba(213, 211, 255, 0.34) 48%,
+        rgba(255, 227, 161, 0.28) 100%
+      );
   }
 
   .why-grid {
@@ -944,9 +1073,12 @@
   /* ── COMING SOON CONTENT ── */
   .content-section {
     overflow-x: visible;
-    border-top: 2px solid rgba(39, 138, 180, 0.22);
-    border-bottom: 1px solid rgba(174, 224, 244, 0.45);
-    background: linear-gradient(180deg, #d8eaf6 0%, #e6f3fa 38%, #f0f9fc 100%);
+    border-top: none;
+    border-bottom: none;
+    background:
+      linear-gradient(180deg, rgba(252, 244, 220, 0.22) 0%, transparent 12%),
+      linear-gradient(180deg, transparent 86%, rgba(226, 240, 250, 0.55) 94%, rgba(218, 234, 244, 0.5) 100%),
+      linear-gradient(180deg, #d8eaf6 0%, #e6f3fa 38%, #f0f9fc 100%);
   }
 
   .content-grid {
@@ -1278,7 +1410,7 @@
     <img class="logo-mark" src="clari logo.png" alt="Clari Health logo mark">
     <span class="logo-text"><span class="clari">clari</span><span>health</span></span>
   </a>
-  <div class="nav-badge">Coming Soon</div>
+  <div class="nav-badge"><span class="nav-badge-text">Coming Soon</span></div>
 </nav>
 
 <!-- HERO -->
@@ -1291,8 +1423,10 @@
   </div>
   <div class="hero-content">
     <div class="eyebrow">
-      <span class="eyebrow-dot"></span>
-      Women's health, made clear
+      <span class="eyebrow-inner">
+        <span class="eyebrow-dot"></span>
+        Women's health, made clear
+      </span>
     </div>
     <h1>
       Understanding healthcare<br>
@@ -1310,62 +1444,6 @@
       <a class="btn-secondary" href="#mission">
         Learn our story
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- MISSION -->
-<section class="mission" id="mission">
-  <div class="section-inner">
-    <div class="section-label reveal">Our mission</div>
-    <h2 class="section-title reveal">Clear health information that truly reaches everyone</h2>
-    <p class="section-body reveal">
-      Every woman deserves to fully understand her healthcare options, regardless of her language, cultural background, or where she accesses care. Clari Health is being built to make that a reality.
-    </p>
-  </div>
-</section>
-
-<!-- COMMUNITY INSIGHTS -->
-<section class="insights-strip">
-  <div class="section-inner">
-    <div class="section-label reveal">What we have heard so far</div>
-    <h2 class="section-title reveal">Community voices are shaping what we build</h2>
-    <p class="section-body reveal">
-      Families and women continue to share clear challenges with us. These insights are guiding our content and our product decisions.
-    </p>
-  </div>
-  <div class="insights-inner">
-    <div class="card-carousel" data-carousel data-carousel-kind="insights">
-      <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="carousel-viewport carousel-stack-viewport">
-        <div class="carousel-stack">
-          <div class="insight-card carousel-item reveal">
-            <div class="insight-icon" aria-hidden="true">🌐</div>
-            <div class="insight-title">Information in more languages</div>
-            <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
-          </div>
-          <div class="insight-card carousel-item reveal">
-            <div class="insight-icon" aria-hidden="true">🗣️</div>
-            <div class="insight-title">Faster access to interpreters</div>
-            <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
-          </div>
-          <div class="insight-card carousel-item reveal">
-            <div class="insight-icon" aria-hidden="true">🤝</div>
-            <div class="insight-title">Cultural understanding in care</div>
-            <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
-          </div>
-          <div class="insight-card carousel-item reveal">
-            <div class="insight-icon" aria-hidden="true">📋</div>
-            <div class="insight-title">Clearer explanations from staff</div>
-            <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
-          </div>
-        </div>
-      </div>
-      <button type="button" class="carousel-btn carousel-next" aria-label="Next">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
     </div>
   </div>
 </section>
@@ -1453,6 +1531,62 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- COMMUNITY INSIGHTS -->
+<section class="insights-strip">
+  <div class="section-inner">
+    <div class="section-label reveal">What we have heard so far</div>
+    <h2 class="section-title reveal">Community voices are shaping what we build</h2>
+    <p class="section-body reveal">
+      Families and women continue to share clear challenges with us. These insights are guiding our content and our product decisions.
+    </p>
+  </div>
+  <div class="insights-inner">
+    <div class="card-carousel" data-carousel data-carousel-kind="insights">
+      <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel-viewport carousel-stack-viewport">
+        <div class="carousel-stack">
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🌐</div>
+            <div class="insight-title">Information in more languages</div>
+            <p class="insight-text">People need better access to trusted health information and simple materials in the languages they use at home.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🗣️</div>
+            <div class="insight-title">Faster access to interpreters</div>
+            <p class="insight-text">Women tell us interpreter support is still hard to access during outpatient visits and while on the ward.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">🤝</div>
+            <div class="insight-title">Cultural understanding in care</div>
+            <p class="insight-text">Communities feel traditions and cultural context are often not fully understood by staff in clinical settings.</p>
+          </div>
+          <div class="insight-card carousel-item reveal">
+            <div class="insight-icon" aria-hidden="true">📋</div>
+            <div class="insight-title">Clearer explanations from staff</div>
+            <p class="insight-text">When procedures are explained too briefly because of language barriers, patients leave with less understanding.</p>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="carousel-btn carousel-next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="section-inner">
+    <div class="section-label reveal">Our mission</div>
+    <h2 class="section-title reveal">Clear health information that truly reaches everyone</h2>
+    <p class="section-body reveal">
+      Every woman deserves to fully understand her healthcare options, regardless of her language, cultural background, or where she accesses care. Clari Health is being built to make that a reality.
+    </p>
   </div>
 </section>
 
