@@ -832,6 +832,7 @@
     margin-bottom: 1.25rem;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
 
   .showcase-carousel-viewport {
@@ -839,6 +840,7 @@
     inset: 0;
     border-radius: inherit;
     overflow: hidden;
+    z-index: 1;
   }
 
   .showcase-carousel-slide {
@@ -1590,14 +1592,14 @@
       <div class="mission-visual reveal">
         <div class="visual-card">
           <div class="play-area" data-showcase-carousel>
-            <button type="button" class="showcase-carousel-btn showcase-carousel-prev" aria-label="Previous frame">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
             <div class="showcase-carousel-viewport">
               <img src="frame1.png" alt="Patient education video preview frame 1" class="showcase-carousel-slide is-active">
               <img src="frame2.png" alt="Patient education video preview frame 2" class="showcase-carousel-slide">
               <img src="frame3.png" alt="Patient education video preview frame 3" class="showcase-carousel-slide">
             </div>
+            <button type="button" class="showcase-carousel-btn showcase-carousel-prev" aria-label="Previous frame">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
             <button type="button" class="showcase-carousel-btn showcase-carousel-next" aria-label="Next frame">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
