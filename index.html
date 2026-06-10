@@ -829,11 +829,128 @@
     background: linear-gradient(135deg, rgba(39,138,180,0.14) 0%, rgba(213,211,255,0.28) 100%);
     border-radius: 14px;
     height: 200px;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .showcase-carousel-viewport {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+
+  .showcase-carousel-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: translateX(100%);
+    z-index: 1;
+    transition: none;
+  }
+
+  .showcase-carousel-slide.is-active,
+  .showcase-carousel-slide.is-exiting-left,
+  .showcase-carousel-slide.is-exiting-right,
+  .showcase-carousel-slide.is-entering-from-left,
+  .showcase-carousel-slide.is-entering-from-right {
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .showcase-carousel-slide.is-active {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+  }
+
+  .showcase-carousel-slide.is-entering-from-right {
+    opacity: 0;
+    transform: translateX(100%);
+    z-index: 2;
+  }
+
+  .showcase-carousel-slide.is-entering-from-left {
+    opacity: 0;
+    transform: translateX(-100%);
+    z-index: 2;
+  }
+
+  .showcase-carousel-slide.is-exiting-left {
+    opacity: 0;
+    transform: translateX(-100%);
+    z-index: 1;
+  }
+
+  .showcase-carousel-slide.is-exiting-right {
+    opacity: 0;
+    transform: translateX(100%);
+    z-index: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-carousel-slide.is-active,
+    .showcase-carousel-slide.is-exiting-left,
+    .showcase-carousel-slide.is-exiting-right,
+    .showcase-carousel-slide.is-entering-from-left,
+    .showcase-carousel-slide.is-entering-from-right {
+      transition: opacity 0.12s ease;
+      transform: translateX(0) !important;
+    }
+  }
+
+  .showcase-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(39,138,180,0.25);
+    background: rgba(255,255,255,0.98);
+    color: var(--ocean-dark);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.25rem;
-    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 16px rgba(39,138,180,0.14);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(39, 138, 180, 0.12);
+  }
+
+  .showcase-carousel-btn.showcase-carousel-prev { left: 0.5rem; }
+  .showcase-carousel-btn.showcase-carousel-next { right: 0.5rem; }
+
+  .showcase-carousel-btn:hover {
+    transform: translateY(-50%) scale(1.07);
+    border-color: rgba(39,138,180,0.45);
+    box-shadow: 0 8px 22px rgba(39,138,180,0.2);
+  }
+
+  .showcase-carousel-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .play-area .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .play-area .play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .play-btn {
@@ -1472,7 +1589,18 @@
 
       <div class="mission-visual reveal">
         <div class="visual-card">
-          <div class="play-area">
+          <div class="play-area" data-showcase-carousel>
+            <button type="button" class="showcase-carousel-btn showcase-carousel-prev" aria-label="Previous frame">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="showcase-carousel-viewport">
+              <img src="frame1.png" alt="Patient education video preview frame 1" class="showcase-carousel-slide is-active">
+              <img src="frame2.png" alt="Patient education video preview frame 2" class="showcase-carousel-slide">
+              <img src="frame3.png" alt="Patient education video preview frame 3" class="showcase-carousel-slide">
+            </div>
+            <button type="button" class="showcase-carousel-btn showcase-carousel-next" aria-label="Next frame">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
             <div class="play-btn">
               <svg viewBox="0 0 24 24" fill="none"><path d="M7 4l13 8-13 8V4z" fill="white"/></svg>
             </div>
@@ -1981,6 +2109,76 @@
       apply();
       requestAnimationFrame(() => apply());
     });
+  })();
+
+  (function initShowcaseCarousel() {
+    const area = document.querySelector('[data-showcase-carousel]');
+    if (!area) return;
+
+    const slides = Array.from(area.querySelectorAll('.showcase-carousel-slide'));
+    const prevBtn = area.querySelector('.showcase-carousel-prev');
+    const nextBtn = area.querySelector('.showcase-carousel-next');
+    const SLIDE_MS = 400;
+    let activeIndex = 0;
+    let isAnimating = false;
+
+    const motionClasses = [
+      'is-exiting-left',
+      'is-exiting-right',
+      'is-entering-from-left',
+      'is-entering-from-right',
+    ];
+
+    function resetSlide(slide) {
+      slide.classList.remove('is-active', ...motionClasses);
+    }
+
+    function show(index, direction) {
+      const n = slides.length;
+      if (n === 0 || isAnimating) return;
+
+      const newIndex = ((index % n) + n) % n;
+      if (newIndex === activeIndex) return;
+
+      const outgoing = slides[activeIndex];
+      const incoming = slides[newIndex];
+      const exitClass = direction === 'next' ? 'is-exiting-left' : 'is-exiting-right';
+      const enterClass = direction === 'next' ? 'is-entering-from-right' : 'is-entering-from-left';
+
+      slides.forEach((slide, i) => {
+        if (i !== activeIndex && i !== newIndex) resetSlide(slide);
+      });
+
+      isAnimating = true;
+      outgoing.classList.remove('is-active');
+      outgoing.classList.add(exitClass);
+
+      incoming.classList.remove(...motionClasses);
+      incoming.classList.add(enterClass);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          incoming.classList.add('is-active');
+          incoming.classList.remove(enterClass);
+        });
+      });
+
+      window.setTimeout(() => {
+        outgoing.classList.remove(...motionClasses);
+        activeIndex = newIndex;
+        isAnimating = false;
+      }, SLIDE_MS);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => show(activeIndex - 1, 'prev'));
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => show(activeIndex + 1, 'next'));
+    }
+
+    slides.forEach((slide, i) => resetSlide(slide));
+    slides[0].classList.add('is-active');
   })();
 </script>
 </body>
